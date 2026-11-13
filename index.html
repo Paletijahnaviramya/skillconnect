@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkillConnect | Local Opportunities for Women</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+<div class="app-shell">
+<aside class="sidebar">
+  <a class="brand" href="#"><span class="brand-mark">S</span><span>Skill<span class="brand-green">Connect</span><small>LOCAL OPPORTUNITIES</small></span></a>
+  <div class="side-label">WORKSPACE</div>
+  <button class="nav active" data-view="overview"><span>⌂</span> Overview</button>
+  <button class="nav" data-view="discover"><span>⌕</span> Find opportunities</button>
+  <button class="nav" data-view="recommend"><span>✧</span> Smart matches <i class="new-tag">AI</i></button>
+  <button class="nav" data-view="applications"><span>▤</span> My applications</button>
+  <button class="nav" data-view="saved"><span>♡</span> Saved opportunities</button>
+  <button class="nav" data-view="community"><span>✿</span> Skill circles</button>
+  <button class="nav" data-view="profile"><span>◉</span> My skill profile</button>
+  <button class="nav" data-view="insights"><span>▥</span> Local insights</button>
+  <button class="nav" data-view="post" style="display:none"><span>＋</span> Post opportunity</button>
+  <button class="nav" data-view="admin" style="display:none"><span>⚙</span> Admin management</button>
+  <button class="nav" data-view="login"><span>⇥</span> Sign in / Register</button>
+  <div class="sidebar-bottom">
+    <div class="help-card"><div class="help-icon">✦</div><b>Your skills have value.</b><p>Discover flexible work opportunities close to home.</p></div>
+    <button class="nav" id="logoutBtn"><span>↪</span> Sign out</button>
+    <div class="user-mini"><div class="avatar">SC</div><div><b id="sideName">Guest user</b><small id="sideRole">Welcome</small></div></div>
+  </div>
+</aside>
+<main class="main">
+<header class="topbar"><div><div class="eyebrow">WOMEN • SKILLS • OPPORTUNITIES</div><h1 id="pageTitle">Good day. Welcome to SkillConnect <span>✦</span></h1></div><div class="top-actions"><span class="status-pill"><i></i> Community active</span><button class="icon-btn" title="Notifications">♧</button><button class="avatar top-avatar" id="topAvatar">SC</button></div></header>
+<section id="overview" class="view active">
+  <div class="hero"><div class="hero-copy"><span class="hero-kicker">YOUR SKILLS. YOUR OPPORTUNITY.</span><h2>Turn your talent into<br><em>new possibilities.</em></h2><p>Find meaningful, flexible work opportunities in your neighbourhood. Your skills deserve to be seen.</p><button class="btn light" onclick="showView('discover')">Explore opportunities <span>→</span></button></div><div class="hero-art"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="hero-circle"><div class="hero-person">✿</div><span class="float-card card-one">✂️ <b>Tailoring</b></span><span class="float-card card-two">🍲 <b>Cooking</b></span><span class="float-card card-three">🧵 <b>Handcrafts</b></span></div></div></div>
+  <div class="section-head"><div><div class="eyebrow">YOUR COMMUNITY AT A GLANCE</div><h2>Platform overview</h2></div><span class="muted">Live demo data</span></div>
+  <div class="stats-grid"><div class="stat-card"><div class="stat-icon purple">♙</div><span>Women registered</span><b id="statWomen">—</b><small>Skilled local providers</small></div><div class="stat-card"><div class="stat-icon green">⌑</div><span>Open opportunities</span><b id="statOpps">—</b><small>Ready to explore</small></div><div class="stat-card"><div class="stat-icon orange">▤</div><span>Applications</span><b id="statApps">—</b><small>Submitted by providers</small></div><div class="stat-card"><div class="stat-icon blue">✧</div><span>Successful matches</span><b id="statMatches">—</b><small>Selected applications</small></div></div>
+  <div class="content-grid"><div class="panel"><div class="panel-head"><div><h3>Featured opportunities</h3><p>Work available around your community</p></div><button class="text-btn" onclick="showView('discover')">View all →</button></div><div id="featuredList" class="opportunity-list"></div></div><div class="panel"><div class="panel-head"><div><h3>How SkillConnect works</h3><p>A simple path to new opportunities</p></div></div><div class="steps"><div class="step"><span>01</span><div><b>Showcase your skills</b><p>Create a profile and tell us what you do best.</p></div></div><div class="step"><span>02</span><div><b>Get smart matches</b><p>Discover work based on skills and location.</p></div></div><div class="step"><span>03</span><div><b>Grow your income</b><p>Apply, build experience and get reviews.</p></div></div></div></div></div>
+</section>
+<section id="discover" class="view"><div class="section-head"><div><div class="eyebrow">DISCOVER WORK</div><h2>Opportunities near you</h2><p class="muted">Explore flexible work shared by your local community.</p></div></div><div class="filter-row"><input id="searchOpp" placeholder="Search skills or work..."><select id="areaFilter"><option value="">All locations</option><option>Miyapur</option><option>Kukatpally</option><option>Ameerpet</option></select><select id="categoryFilter"><option value="">All categories</option><option>Tailoring</option><option>Cooking</option><option>Embroidery</option><option>Beauty Services</option></select></div><div id="allOpps" class="cards-grid"></div></section>
+<section id="recommend" class="view"><div class="section-head"><div><div class="eyebrow">PERSONALISED FOR YOU</div><h2>Your smart matches <span class="ai-pill">✧ SMART MATCHING</span></h2><p class="muted">Recommendations are ranked using skill relevance, locality and work flexibility.</p></div></div><div id="recommendList" class="cards-grid"></div><div class="note-box">How matching works: skill relevance contributes 60%, locality 30%, and flexible or home-based work 10%. This transparent rule-based model helps prioritise relevant opportunities.</div></section>
+<section id="saved" class="view"><div class="section-head"><div><div class="eyebrow">YOUR SHORTLIST</div><h2>Saved opportunities</h2><p class="muted">Keep interesting work in one place and return when you are ready.</p></div></div><div id="savedList" class="cards-grid"></div></section>
+<section id="community" class="view"><div class="section-head"><div><div class="eyebrow">LEARN · SHARE · GROW</div><h2>Skill circles</h2><p class="muted">Connect with people who share your interests and learn together.</p></div></div><div id="circleList" class="cards-grid"></div></section>
+<section id="applications" class="view"><div class="section-head"><div><div class="eyebrow">YOUR PROGRESS</div><h2>My applications</h2></div></div><div id="applicationList" class="panel"></div></section>
+<section id="profile" class="view"><div class="section-head"><div><div class="eyebrow">YOUR PROFESSIONAL IDENTITY</div><h2>My skill profile</h2><p class="muted">Help local customers understand your skills and availability.</p></div></div><div class="panel profile-panel"><form id="profileForm" class="form-grid"><label>Locality<input id="profileArea" required placeholder="e.g. Miyapur"></label><label>Skills <small>Separate skills with commas</small><input id="profileSkills" placeholder="Tailoring, Cooking"></label><label>Availability<select id="profileAvailability"><option>Flexible</option><option>Morning</option><option>Afternoon</option><option>Evening</option><option>Weekends</option></select></label><label class="full">About you<textarea id="profileBio" rows="4" placeholder="Describe your experience, services and preferred work..."></textarea></label><label class="full">Portfolio photo links <small>Optional: paste image URLs, one per line</small><textarea id="profilePortfolio" rows="2" placeholder="https://example.com/my-work.jpg"></textarea></label>
+<label class="full">Upload completed-work photos <small>JPG, PNG or WEBP · up to 5 photos, 4 MB each</small><input id="portfolioFiles" type="file" accept="image/png,image/jpeg,image/webp" multiple></label>
+<div class="full"><button type="button" class="btn secondary" id="uploadPortfolioBtn">Upload portfolio photos</button><div id="portfolioGallery" class="portfolio-gallery"></div></div><div class="full"><button class="btn primary">Save profile</button></div></form></div><div class="panel earning-panel"><div><div class="eyebrow">EARNING ESTIMATOR</div><h3>Plan your earning potential</h3><p class="muted">Illustrative estimate based on selected opportunities in this demo.</p></div><div class="earning-number">₹<b id="earningValue">0</b><small>Estimated total</small></div></div></section>
+<section id="insights" class="view">
+  <div class="insights-hero">
+    <div>
+      <div class="eyebrow">COMMUNITY INTELLIGENCE · LIVE PLATFORM DATA</div>
+      <h2>See where your community is growing.</h2>
+      <p>Explore local demand, discover skill opportunities and take small steps towards your next success.</p>
+    </div>
+    <div class="insights-orb"><span>✦</span><small>SKILLS<br>CREATE<br>OPPORTUNITY</small></div>
+  </div>
+
+  <div class="insight-metrics">
+    <article class="insight-metric"><span class="metric-symbol">⌑</span><small>OPEN OPPORTUNITIES</small><strong id="insightOpenCount">—</strong><span>Available on the platform</span></article>
+    <article class="insight-metric"><span class="metric-symbol">♙</span><small>WOMEN IN COMMUNITY</small><strong id="insightWomenCount">—</strong><span>Registered skill providers</span></article>
+    <article class="insight-metric"><span class="metric-symbol">✧</span><small>APPLICATIONS SENT</small><strong id="insightApplicationCount">—</strong><span>Interest in local work</span></article>
+    <article class="insight-metric"><span class="metric-symbol">↗</span><small>TOP SKILL CATEGORY</small><strong class="metric-category" id="insightTopSkill">—</strong><span>Most listed opportunities</span></article>
+  </div>
+
+  <div class="insight-layout">
+    <div class="panel demand-panel">
+      <div class="panel-heading-flex">
+        <div><div class="eyebrow">OPPORTUNITY TRENDS</div><h3>Local skill demand</h3><p class="muted">Compare the number of currently listed opportunities in each category.</p></div>
+        <span class="live-label"><i></i> Updated from listings</span>
+      </div>
+      <div class="demand-chart-wrap"><canvas id="demandChart"></canvas></div>
+      <div id="demandBreakdown" class="demand-breakdown"></div>
+    </div>
+    <div class="panel insight-side-panel">
+      <div class="eyebrow">YOUR NEXT STEP</div>
+      <h3>Build your growth plan</h3>
+      <p class="muted">A few practical actions can make your profile more visible to local customers.</p>
+      <div class="growth-checklist">
+        <div class="growth-action"><span class="action-number">01</span><div><b>Show your best work</b><p>Add clear photos of completed work to strengthen your portfolio.</p><button class="inline-action" onclick="showView('profile')">Visit my profile →</button></div></div>
+        <div class="growth-action"><span class="action-number">02</span><div><b>Stay discoverable</b><p>Keep your locality and availability updated for better matches.</p><button class="inline-action" onclick="showView('profile')">Update details →</button></div></div>
+        <div class="growth-action"><span class="action-number">03</span><div><b>Unlock new work</b><p>Explore related skills to access more categories of work.</p><button class="inline-action" onclick="showView('discover')">Explore opportunities →</button></div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="insight-bottom-grid">
+    <div class="panel learning-panel">
+      <div class="panel-heading-flex"><div><div class="eyebrow">SKILL GAP ASSISTANT</div><h3>Learn a skill. Grow your options.</h3><p class="muted">Choose an area to get a practical starter activity.</p></div><span class="learning-mark">✧</span></div>
+      <label class="field-label" for="gapSkill">I want to improve</label>
+      <select id="gapSkill"><option>Digital payments</option><option>Product photography</option><option>Customer communication</option><option>Online marketing</option></select>
+      <div id="gapAdvice" class="learning-advice"><b>Your learning tip</b><span>Choose a skill to see a suggested learning action.</span></div>
+    </div>
+    <div class="panel community-note">
+      <div class="eyebrow">A COMMUNITY THAT GROWS TOGETHER</div>
+      <h3>Your experience can inspire another woman.</h3>
+      <p>Share your skills, keep learning and build trust through quality work and positive customer experiences.</p>
+      <button class="btn primary" onclick="showView('profile')">Strengthen my profile <span>→</span></button>
+    </div>
+  </div>
+</section>
+<section id="post" class="view"><div class="section-head"><div><div class="eyebrow">COMMUNITY EMPLOYERS</div><h2>Post an opportunity</h2></div></div><div class="panel"><form id="postForm" class="form-grid"><label>Opportunity title<input name="title" required></label><label>Category<select name="category"><option>Tailoring</option><option>Cooking</option><option>Embroidery</option><option>Beauty Services</option><option>Handicrafts</option><option>Other</option></select></label><label>Locality<input name="area" required></label><label>Estimated payment (₹)<input name="pay" type="number" min="0" required></label><label>Work type<select name="work_type"><option>Flexible</option><option>Home-based</option><option>Part-time</option></select></label><label class="full">Description<textarea name="description" rows="4" required></textarea></label><div class="full"><button class="btn primary">Publish opportunity</button></div></form></div></section>
+<section id="admin" class="view"><div class="section-head"><div><div class="eyebrow">PLATFORM CONTROL</div><h2>Admin management</h2></div></div><div class="panel"><h3>Registered users</h3><div id="adminUsers"></div></div><div class="panel"><h3>Application management</h3><div id="adminApps"></div></div></section>
+<section id="login" class="view"><div class="auth-wrap"><div class="auth-brand"><span class="brand-mark">S</span><h2>Welcome to SkillConnect</h2><p>Connect your skills with opportunities in your community.</p></div><div class="auth-card"><div class="auth-tabs"><button class="selected" id="loginTab">Sign in</button><button id="registerTab">Create account</button></div><form id="loginForm"><label>Phone number<input id="loginPhone" required placeholder="Enter phone number"></label><label>Password<input id="loginPassword" type="password" required placeholder="Enter password"></label><button class="btn primary full-btn">Sign in</button><p class="auth-hint">Demo: 9000000001 / demo (Women) · 9000000005 / demo (Customer) · 9000000004 / admin (Admin)</p></form><form id="registerForm" class="hidden"><label>Full name<input name="name" required></label><label>Phone number<input name="phone" required></label><label>Password<input name="password" type="password" required></label><label>Account type<select name="role"><option value="woman">Woman service provider</option><option value="customer">Customer / employer</option></select></label><label>Locality<input name="area" required placeholder="Your neighbourhood"></label><label>Skills <small>Optional, comma-separated</small><input name="skills" placeholder="Tailoring, Cooking"></label><button class="btn primary full-btn">Create account</button></form></div></div></section>
+<footer>Built for inclusive local livelihoods · © 2026 SkillConnect · Empowering local skills, creating local opportunities.</footer>
+</main></div>
+<div id="toast" class="toast"></div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body></html>
